@@ -1,0 +1,96 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+model Agencia {
+  id_ag         Int      @id @default(autoincrement())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @default(now()) @updatedAt
+  nome_banco    String   @db.VarChar(20)
+  numero_ag     String   @db.VarChar(15) @unique
+  nome_ag       String   @db.VarChar(100)
+  end_ip        String   @db.VarChar(15) @unique
+  porta         String   @db.VarChar(10)
+  masc_rede     String   @db.VarChar(15) 
+  end_dns       String   @db.VarChar(15) 
+  gateway       String   @db.VarChar(15) 
+  ipfixo_dhcp   String   @db.VarChar(10)
+  mac_adress    String   @db.VarChar(20) @unique
+  controle      Controle_acesso[]
+  status        StatusAgencia[]
+}
+
+model StatusAgencia {
+  id_status     Int       @id @default(autoincrement())
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @default(now()) @updatedAt
+  NA_           String    @db.VarChar(15) @unique
+  M00           Int?       @db.Int
+  M01           Int?       @db.Int
+  M02           Int?       @db.Int
+  M03           Int?       @db.Int
+  M04           Int?       @db.Int
+  M05           Int?       @db.Int
+  M06           Int?       @db.Int
+  M07           Int?       @db.Int
+  M08           Int?       @db.Int
+  M09           Int?       @db.Int
+  M10           Int?       @db.Int
+  M11           Int?       @db.Int
+  M12           Int?       @db.Int
+  M13           Int?       @db.Int
+  M14           Int?       @db.Int
+  M15           Int?       @db.Int
+  M16           Int?       @db.Int
+  M17           Int?       @db.Int
+  M18           Int?       @db.Int
+  M19           Int?       @db.Int
+  M20           Int?       @db.Int
+  M21           Int?       @db.Int
+  G00           Int?       @db.Int
+  G21           Int?       @db.Int
+  AA_           Int?       @db.Int
+  AF_           Int?       @db.Int
+  CA_           Int?       @db.Int
+  CF_           Int?       @db.Int
+  H1_           Boolean?
+  S1_           Boolean?
+  H2_           Boolean?
+  S2_           Boolean?
+  H3_           Boolean?
+  S3_           Boolean?
+  H4_           Boolean?
+  S4_           Boolean?
+  HF_           Boolean?
+  PF_           Int?       @db.Int
+  PS_           Int?       @db.Int
+  WR_           Boolean?
+  agencia       Agencia   @relation(fields: [NA_], references: [numero_ag])
+
+}
+
+model Controle_acesso {
+  id_evt               Int                   @id @default(autoincrement())
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @default(now()) @updatedAt
+  end_ip               String                @db.VarChar(15)
+  mac_adress           String                @db.VarChar(20)
+  evento               Agencia               @relation(fields: [mac_adress], references: [mac_adress]) 
+  data_evt             String                @db.VarChar(10)
+  hora_evt             String                @db.VarChar(10)   
+  usuario              String                @db.VarChar(10)
+  comando              String                @db.VarChar(100)
+  valor                String                @db.VarChar(20)                     
+  
+}
+
+
+
