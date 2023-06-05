@@ -35,7 +35,7 @@ app.get('/hour-door/:ip/:command/:hour', hourDoors);
 app.get('/stop-alert/:ip', invasionAlert);
 
 app.get('/reset/:ip/:position', resetEmployee);
-app.get('/add/:ip/:position/:registration/:password', addEmployee );
+app.get('/add/:ip/:position/:registration/:password', addEmployee);
 
 
 const routes = require('./routes/routes');
@@ -44,14 +44,14 @@ const routes = require('./routes/routes');
 setInterval(() => {
   axios({
     method: 'get',
-    url: 'http://localhost:4002/eventos'
+  url: `http://${process.env.IP}/eventos`
   })
 }, 5000);
 
 setInterval(() => {
   axios({
     method: 'get',
-    url: 'http://localhost:4002/status'
+    url: `http://${process.env.IP}/status`
   })
 }, 5000);
 
